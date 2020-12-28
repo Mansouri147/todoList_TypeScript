@@ -1,5 +1,6 @@
 import React, { useEffect, useState, FC } from "react";
 import ContentEditable from "react-contenteditable";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export interface Todo {
   completed: boolean;
@@ -43,38 +44,59 @@ const List = ({ setTodoList, todoList, filterBy }: ListProps) => {
     arr: Todo[]
   ): void => {
     let newList = arr.map((el) =>
-      el.id === item.id ? { ...el, completed: !item.completed } : el
+      el.id == item.id ? { ...el, completed: !item.completed } : el
     );
     setTodoList(newList);
   };
 
   const editableHandler = (e, arr, item): void => {
     let newList = arr.map((el) =>
-      el.id === item.id ? { ...el, content: e.target.value } : el
+      el.id == item.id ? { ...el, content: e.target.value } : el
     );
     setFilteredList(newList);
   };
+
+  function handleOnDragEnd(result) {
+    console.log(result)
+  }
+
   return (
-    
-    <div>
-      {filteredList.map((item: Todo, i: number, arr: Todo[]) => (
-        <div key={i}>
-          <ContentEditable
-            style={{
-              textDecoration: item.completed && "line-through",
-              opacity: item.completed && 0.5,
-            }}
-            className={`todoItem ${item.completed ? "completed" : ""}`}
-            html={item.content}
-            onChange={(e) => editableHandler(e, arr, item)}
-          />
-          <button onClick={() => deleteItem(item.id)}>Delete</button>
-          <button onClick={(e) => reverseCompleted(e, item, arr)}>
-            {item.completed ? "unCompleted" : "Completed"}
-          </button>
-        </div>
-      ))}
-    </div>
+    <DragDropContext onDragEnd={handleOnDragEnd}t>
+      <Droppable droppableId="list">
+        {(provided) => (
+          <div
+            className="list"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {filteredList.map((item: Todo, i: number, arr: Todo[]) => (
+              <Draggable key={item.id} draggableId={`${item.id}`} index={i}>
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <ContentEditable
+                      style={{
+                        textDecoration: item.completed && "line-through",
+                        opacity: item.completed && 0.5,
+                      }}
+                      className={`todoItem ${
+                        item.completed ? "completed" : ""
+                      }`}
+                      html={item.content}
+                      onChange={(e) => editableHandler(e, arr, item)}
+                    />
+                    <button onClick={() => deleteItem(item.id)}>Delete</button>
+                    <button onClick={(e) => reverseCompleted(e, item, arr)}>
+                      {item.completed ? "unCompleted" : "Completed"}
+                    </button>
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 
