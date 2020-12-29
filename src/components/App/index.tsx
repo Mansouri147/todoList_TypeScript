@@ -1,44 +1,26 @@
-import React, { useState, FC } from "react";
+import React, { useState } from "react";
 import Form from "../Form";
-import List, { Todo } from "../List";
+import List from "../List";
 
-const App: React.FC = () => {
-  const [input, setInput] = useState("");
-  const [todoList, setTodoList] = useState<Todo[]>([]);
-  const [filterBy, setFilterBy] = useState<string>("");
-
-  const addTodoItem = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
-    if (input) {
-      const newTodoItem = {
-        content: input,
-        id: Math.random() * 1000,
-        completed: false,
-      };
-      console.log(todoList);
-      setTodoList([...todoList, newTodoItem]);
-    }
-    setInput("");
-  };
-
+type FilterType = "ALL" | "DONE" | "UNDONE";
+const App = () => {
+  const [filterBy, setFilterBy] = useState<FilterType>("ALL");
   return (
     <div>
-      <Form input={input} addTodoItem={addTodoItem} setInput={setInput} />
+      <Form originalTodo={null} />
       <select
         name=""
         id=""
         value={filterBy}
         onChange={(e) => {
-          setFilterBy(e.target.value);
+          setFilterBy(e.target.value as FilterType);
         }}
       >
-        <option value="all">All</option>
-        <option value="uncompleted">Uncompleted</option>
-        <option value="completed">Completed</option>
+        <option value="ALL">All</option>
+        <option value="DONE">Uncompleted</option>
+        <option value="UNDONE">Completed</option>
       </select>
-      <List filterBy={filterBy} todoList={todoList} setTodoList={setTodoList} />
+      <List filterBy={filterBy} />
     </div>
   );
 };

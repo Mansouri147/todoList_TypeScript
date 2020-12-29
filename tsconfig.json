@@ -3,8 +3,10 @@
     "baseUrl": "./src",
     "jsx": "react",
     "moduleResolution": "Node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
     "lib": ["es5", "ES2015", "es6", "dom", "dom.iterable"],
     "paths": {
       "~*": ["./*"]

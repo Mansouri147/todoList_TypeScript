@@ -1,12 +1,24 @@
-import React, { FC } from "react";
+import { observer } from "mobx-react";
+import React, { FC, useState } from "react";
+import todoStore, { Todo } from "../../context/todoStore";
 
 interface FormProps {
-  input: string;
-  setInput: (input: string) => void;
-  addTodoItem: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  originalTodo: Todo | null;
 }
 
-const Form: React.FC<FormProps> = ({ input, setInput, addTodoItem }) => {
+const Form = observer(({ originalTodo }: FormProps) => {
+  const [input, setInput] = useState<string>(originalTodo?.content || "");
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (originalTodo === null) {
+      todoStore.addTodoItem({ completed: false, content: input });
+    } else {
+      todoStore.updateItem({
+        ...originalTodo,
+        content: input,
+      });
+    }
+  }
   return (
     <div>
       <form action="">
@@ -17,9 +29,9 @@ const Form: React.FC<FormProps> = ({ input, setInput, addTodoItem }) => {
           placeholder="what needs to be done"
           type="text"
         />
-        <button onClick={addTodoItem}>set todo</button>
+        <button onClick={handleSubmit}>set todo</button>
       </form>
     </div>
   );
-};
+});
 export default Form;
