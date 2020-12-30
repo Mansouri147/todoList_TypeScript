@@ -16,7 +16,7 @@ class createTodoStore {
       addTodoItem: action,
       deleteItem: action,
       updateItem: action,
-    });
+    })
   }
 
   addTodoItem = ({

@@ -1,11 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import "./index.css";
 import App from "./components/App";
-// import { TodoProvider } from "./context/TodoContext";
+    // Style sheet name ⚛️
 
 ReactDOM.render(
-  // <TodoProvider>
     <App />,
-  // </TodoProvider>,
   document.getElementById("root")
 );
