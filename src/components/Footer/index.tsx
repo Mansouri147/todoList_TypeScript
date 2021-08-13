@@ -1,7 +1,7 @@
 import React from "react";
 import todoStore, { Todo } from "../../context/todoStore";
 import { observer } from "mobx-react";
-import "./styles.css";
+// import "./styles.css";
 
 type FilterType = "ALL" | "DONE" | "UNDONE";
 const Footer = observer(

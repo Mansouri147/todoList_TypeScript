@@ -1,5 +1,5 @@
 // import { Todo } from "../components/List";
-import { makeObservable, observable, computed, action } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 import { nanoid } from "nanoid";
 export interface Todo {
   completed: boolean;
@@ -27,12 +27,12 @@ class createTodoStore {
     content: string;
   }): void => {
     this.todoList = [
-      ...this.todoList,
       {
         id: nanoid(),
         completed,
         content,
       },
+      ...this.todoList,
     ];
   };
 

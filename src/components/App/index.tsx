@@ -3,7 +3,7 @@ import Form from "../Form";
 import List from "../List";
 import Footer from "../Footer"
 import todoStore, { Todo } from "../../context/todoStore";
-import "./styles.css";
+// import "./styles.css";
 
 type FilterType = "ALL" | "DONE" | "UNDONE";
 const App = () => {
@@ -27,7 +27,6 @@ const App = () => {
       todoStore.todoList.filter((todo: Todo) => !todo.completed).length
     );
   };
-
 
   return (
     <div className="app">

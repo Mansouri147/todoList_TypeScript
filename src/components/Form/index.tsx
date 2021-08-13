@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import React, { useState } from "react";
 import todoStore, { Todo } from "../../context/todoStore";
-import "./styles.css";
+// import "./styles.css";
 
 interface FormProps {
   originalTodo: Todo | null;
@@ -20,9 +20,6 @@ const Form = observer(({ originalTodo }: FormProps) => {
         content: input,
       });
       setInput("");
-      // setItemsLeft(
-      //   todoStore.todoList.filter((todo: Todo) => !todo.completed).length
-      // );
     }
   }
 
@@ -36,7 +33,7 @@ const Form = observer(({ originalTodo }: FormProps) => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="What needs to be done?"
           type="text"
-        />  
+        />
         <button className="form__submitTodo" onClick={handleSubmit}>
           set todo
         </button>
